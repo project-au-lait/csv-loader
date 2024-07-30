@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:if="ant:if" xmlns:unless="ant:unless" name="csv-loader" basedir=".">
+
+  <taskdef resource="net/sf/antcontrib/antlib.xml" />
+
+  <condition property="os.windows" value="true" else="false">
+    <os family="windows" />
+  </condition>
+
+  <condition property="mvn.cmd" value="${basedir}\mvnw.cmd" else="${basedir}\mvnw">
+    <os family="windows" />
+  </condition>
+
+  <target name="translate-readme">
+    <exec executable="${mvn.cmd}" failonerror="true">
+      <arg line="-N batch-translator:translate
+        -Dbt.source=README_ja.md
+        -Dbt.target=README.md
+        -Dbt.mode=ja2en
+        -Dbt.engine=aws" />
+    </exec>
+
+    <replace file="README.md" token="[English](README.md)" value="[日本語](README_ja.md)"/>
+  </target>
+
+
+  <target name="set-version">
+    <property name="version" value="" />
+    <fail
+      if:blank="${version}" 
+      message="Please specify version in the system properties. (e.g. mvnw -Dant.target=set-version -Dversion=1.x.x"
+    />
+
+    <exec executable="${mvn.cmd}" dir="${basedir}">
+      <arg line="versions:set -DnewVersion=${version} -DgenerateBackupPoms=false" />
+    </exec>
+
+    <if>
+      <not>
+        <matches string="${version}" pattern="^.*-SNAPSHOT$" />
+      </not>
+      <then>
+        <replaceregexp flags="g,i">
+          <regexp pattern="((?&lt;=csv[\s-]loader.*)|(?&lt;=version&gt;.*))(\d+[\.\d]+\d+)" />
+          <substitution expression="${version}" />
+          <fileset dir="${basedir}">
+            <include name="README*.md" />
+          </fileset>
+        </replaceregexp>
+      </then>
+    </if>
+  </target>
+
+</project>

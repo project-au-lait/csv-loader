@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "start-db",
+      "type": "shell",
+      "osx": {
+        "command": "./mvnw"
+      },
+      "windows": {
+        "command": ".\\mvnw"
+      },
+      "args": ["-f", "csv-loader-db", "compile"],
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "exec-ant-task",
+      "type": "shell",
+      "osx": {
+        "command": "./mvnw"
+      },
+      "windows": {
+        "command": ".\\mvnw"
+      },
+      "args": ["-N", "-D", "ant.target=${input:ant.target}"],
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "ant.target",
+      "type": "pickString",
+      "description": "Select ant task name",
+      "options": ["translate-readme"]
+    }
+  ]
+}

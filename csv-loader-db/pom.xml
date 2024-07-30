@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- The Basics -->
+  <artifactId>csv-loader-db</artifactId>
+
+  <parent>
+    <groupId>dev.aulait.cl</groupId>
+    <artifactId>csv-loader</artifactId>
+    <version>0.8-SNAPSHOT</version>
+    <relativePath>../</relativePath>
+  </parent>
+
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+  </properties>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/tool/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>.env</include>
+        </includes>
+        <targetPath>${project.basedir}</targetPath>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <executable>docker</executable>
+          <commandlineArgs>compose up -d</commandlineArgs>
+        </configuration>
+        <executions>
+          <execution>
+            <?m2e ignore?>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <phase>compile</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-maven-plugin</artifactId>
+        <version>${flyway.version}</version>
+        <configuration>
+          <configFiles>src/tool/resources/flyway.conf</configFiles>
+          <password>${db.password}</password>
+          <schemas>${db.schema}</schemas>
+          <url>${db.jdbc.url}</url>
+          <user>${db.username}</user>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+            <version>${flyway.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>${db.jdbc.groupId}</groupId>
+            <artifactId>${db.jdbc.artifactId}</artifactId>
+            <version>${db.jdbc.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <?m2e ignore?>
+            <id>migrate-on-compile</id>
+            <goals>
+              <goal>clean</goal>
+              <goal>migrate</goal>
+              <goal>info</goal>
+            </goals>
+            <phase>compile</phase>
+          </execution>
+          <execution>
+            <?m2e ignore?>
+            <id>migrate-on-integration-test</id>
+            <goals>
+              <goal>clean</goal>
+              <goal>migrate</goal>
+              <goal>info</goal>
+            </goals>
+            <phase>integration-test</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>integration-test</id>
+
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
+      <dependencies>
+        <dependency>
+          <groupId>org.flywaydb</groupId>
+          <artifactId>flyway-core</artifactId>
+          <version>${flyway.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>${project.groupId}</groupId>
+          <artifactId>csv-loader-flyway</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+
+      <properties>
+        <flyway.locations>classpath:db/migration</flyway.locations>
+      </properties>
+
+    </profile>
+  </profiles>
+</project>
