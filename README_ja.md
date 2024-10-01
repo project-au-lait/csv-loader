@@ -67,7 +67,7 @@ CREATE TABLE TABLE_1 (
 ```java
 package db.migration;
 
-import dev.aulayt.csvloader.flyway.BaseJavaCsvMigration;
+import dev.aulait.csvloader.flyway.BaseJavaCsvMigration;
 
 @SuppressWarnings("squid:S101")
 public class V2__AddRecords extends BaseJavaCsvMigration {}

@@ -67,7 +67,7 @@ Next, create a Migration class to load data. This class inherits BaseJavacsvMigr
 ```java
 package db.migration;
 
-import dev.aulayt.csvloader.flyway.basejavacsvmigration;
+import dev.aulait.csvloader.flyway.basejavacsvmigration;
 
 @SuppressWarnings("squid:S101")
 public class V2__AddRecords extends BaseJavaCsvMigration {}
