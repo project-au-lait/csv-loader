@@ -27,7 +27,7 @@ project
         └── db/migration
             ├── V1__CreateTables.sql
             └── V2__AddRecords
-                ├── tabe-list.txt
+                ├── table-list.txt
                 ├── TABLE_1.csv
                 └── subdir
                     └── TABLE_2.csv
