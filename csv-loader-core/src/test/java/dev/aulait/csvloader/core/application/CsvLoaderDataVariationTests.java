@@ -28,6 +28,7 @@ class CsvLoaderDataVariationTests extends CsvLoaderTestBase {
     assertEquals("2020-12-29", rs.getString("COL_DATE"));
     assertEquals("12:30:00", rs.getString("COL_TIME"));
     assertEquals(true, rs.getBoolean("COL_BOOLEAN"));
+    assertEquals("00000000-0000-0000-0000-000000000001", rs.getString("COL_UUID"));
 
     assertTrue(rs.next());
 
@@ -45,6 +46,7 @@ class CsvLoaderDataVariationTests extends CsvLoaderTestBase {
     assertEquals(null, rs.getObject("COL_TIME"));
     assertEquals(null, rs.getObject("COL_JSON"));
     assertEquals(null, rs.getObject("COL_BOOLEAN"));
+    assertEquals(null, rs.getObject("COL_UUID"));
 
     assertFalse(rs.next());
   }

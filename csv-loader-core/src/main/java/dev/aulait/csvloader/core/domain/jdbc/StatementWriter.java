@@ -12,8 +12,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Iterator;
+import java.util.UUID;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang3.Strings;
 
 public class StatementWriter {
   private static final String STRING_TO_CONVERT_TO_NULL = "[null]";
@@ -55,6 +57,11 @@ public class StatementWriter {
 
     if (STRING_TO_CONVERT_TO_NULL.equals(cellValue)) {
       pstmt.setNull(columnIndex, dataType);
+      return;
+    }
+
+    if (Strings.CI.equalsAny(metaData.getTypeName(columnName), "uuid", "uniqueidentifier")) {
+      pstmt.setObject(columnIndex, UUID.fromString(cellValue));
       return;
     }
 
