@@ -1,8 +1,6 @@
 package dev.aulait.csvloader.core.application;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import dev.aulait.csvloader.core.infra.CsvLoaderTestBase;
 import java.io.IOException;
@@ -47,6 +45,22 @@ class CsvLoaderDataVariationTests extends CsvLoaderTestBase {
     assertEquals(null, rs.getObject("COL_JSON"));
     assertEquals(null, rs.getObject("COL_BOOLEAN"));
     assertEquals(null, rs.getObject("COL_UUID"));
+
+    assertTrue(rs.next());
+
+    assertEquals(3, rs.getInt("FROM"));
+    assertEquals("two", rs.getString("COL_VARCHAR"));
+    assertEquals("2020-12-31 10:00:00", rs.getString("COL_TIMESTAMP"));
+    assertEquals(true, rs.getBoolean("COL_BOOLEAN"));
+    assertEquals("00000000-0000-0000-0000-000000000003", rs.getString("COL_UUID"));
+
+    assertTrue(rs.next());
+
+    assertEquals(4, rs.getInt("FROM"));
+    assertEquals("three", rs.getString("COL_VARCHAR"));
+    assertEquals("2021-01-01 00:00:00", rs.getString("COL_TIMESTAMP"));
+    assertEquals(true, rs.getBoolean("COL_BOOLEAN"));
+    assertEquals("00000000-0000-0000-0000-000000000004", rs.getString("COL_UUID"));
 
     assertFalse(rs.next());
   }

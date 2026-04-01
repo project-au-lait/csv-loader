@@ -1,5 +1,6 @@
 package dev.aulait.csvloader.core.domain.jdbc;
 
+import dev.aulait.csvloader.core.domain.converter.ValueConverter;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,7 +10,6 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.UUID;
@@ -83,7 +83,7 @@ public class StatementWriter {
         pstmt.setDate(columnIndex, Date.valueOf(LocalDate.parse(cellValue)));
         break;
       case Types.TIMESTAMP:
-        pstmt.setTimestamp(columnIndex, Timestamp.valueOf(LocalDateTime.parse(cellValue)));
+        pstmt.setTimestamp(columnIndex, Timestamp.valueOf(ValueConverter.toTimestamp(cellValue)));
         break;
       case Types.TIME:
         pstmt.setTime(columnIndex, Time.valueOf(LocalTime.parse(cellValue)));
