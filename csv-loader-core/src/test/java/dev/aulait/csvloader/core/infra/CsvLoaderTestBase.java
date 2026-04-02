@@ -8,12 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import dev.aulait.csvloader.core.application.CsvLoader;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -28,8 +24,6 @@ public class CsvLoaderTestBase {
 
   private static final String NULL_MARKER = "[null]";
   private static final String EMPTY_MARKER = "[empty]";
-  private static final String TABLE_LIST_FILE = "table-list.txt";
-  private static final String ORDER_FILE = "ORDER.csv";
 
   private final CSVFormat expectedCsvFormat =
       CSVFormat.DEFAULT.builder().setHeader().setSkipHeaderRecord(true).build();
@@ -52,28 +46,8 @@ public class CsvLoaderTestBase {
     connection.createStatement().execute("DELETE FROM \"ORDER\"");
   }
 
-  protected void loadInputCsv(String tableName, String inputResource)
-      throws IOException, SQLException {
-    String resourceName = getClass().getSimpleName() + "/" + inputResource + ".csv";
-    URL inputUrl = getClass().getResource(resourceName);
-
-    prepareLoaderResources(tableName, inputUrl);
+  protected void loadInputCsv() throws IOException, SQLException {
     loader.load(this, connection, log);
-  }
-
-  private void prepareLoaderResources(String tableName, URL inputUrl) throws IOException {
-    try {
-      URL ownerResourceUrl = getClass().getResource(getClass().getSimpleName() + "/");
-
-      Path ownerResource = Path.of(ownerResourceUrl.toURI());
-      Files.writeString(ownerResource.resolve(TABLE_LIST_FILE), tableName, StandardCharsets.UTF_8);
-      Files.copy(
-          Path.of(inputUrl.toURI()),
-          ownerResource.resolve(ORDER_FILE),
-          StandardCopyOption.REPLACE_EXISTING);
-    } catch (URISyntaxException e) {
-      throw new IOException("Failed to prepare loader resources", e);
-    }
   }
 
   protected void assertExpected(String expectedResource) throws IOException, SQLException {
