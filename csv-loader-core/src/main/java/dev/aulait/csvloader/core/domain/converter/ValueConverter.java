@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class DateTimeParser {
-
-  private static final String SEPERATOR_SLASH = "/";
-  private static final String SEPERATOR_HYPHEN = "-";
+public class ValueConverter {
 
   private static final List<Function<String, LocalDateTime>> PARSERS =
       List.of(
@@ -24,18 +21,15 @@ public class DateTimeParser {
       return null;
     }
 
-    String sanitizedValue = value.replace(SEPERATOR_SLASH, SEPERATOR_HYPHEN).trim();
-
     return PARSERS.stream()
-        .map(parser -> tryParse(parser, sanitizedValue))
+        .map(parser -> tryConvert(parser, value.trim()))
         .filter(Optional::isPresent)
         .map(Optional::get)
         .findFirst()
         .orElseThrow(() -> new IllegalArgumentException("Invalid timestamp: " + value));
   }
 
-  private static Optional<LocalDateTime> tryParse(
-      Function<String, LocalDateTime> parser, String value) {
+  private static <T> Optional<T> tryConvert(Function<String, T> parser, String value) {
     try {
       return Optional.of(parser.apply(value));
     } catch (Exception e) {
