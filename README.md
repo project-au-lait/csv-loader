@@ -92,6 +92,7 @@ For TIMESTAMP columns, the following formats are supported:
 - `yyyy-MM-dd'T'HH:mm:ss` (e.g. 2020-12-29T00:00:00)
 - `yyyy-MM-dd HH:mm:ss` (e.g. 2020-12-29 00:00:00)
 - `yyyy-MM-dd` (e.g. 2020-12-29, interpreted as 00:00:00)
+- `yyyy/MM/dd` (e.g. 2020-12-29, interpreted as 00:00:00. Replace `/` with `-`.)
 
 - TABLE_1.csv
 
