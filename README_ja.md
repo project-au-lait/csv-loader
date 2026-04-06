@@ -92,15 +92,6 @@ TIMESTAMP型のカラムには、以下のフォーマットをサポートし�
 - `yyyy-MM-dd'T'HH:mm:ss`（例: 2020-12-29T00:00:00）
 - `yyyy-MM-dd HH:mm:ss`（例: 2020-12-29 00:00:00）
 - `yyyy-MM-dd`（例: 2020-12-29 ※時刻は00:00:00として扱われます）
-- `yyyy/MM/dd`（例: 2020-12-29 ※時刻は00:00:00として扱われます。`/`を`-`に変換）
-
-カスタムフォーマットを追加する場合は、起動時に以下のVM引数を指定します。
-
-**例:**
-```sh
-mvn flyway:migrate -Ddev.aulait.csvloader.timestamp.format=yyyyMMddHHmm
-```
-指定がない場合、カスタムパーサーは登録されません。
 
 - TABLE_1.csv
 

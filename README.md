@@ -92,15 +92,6 @@ For TIMESTAMP columns, the following formats are supported:
 - `yyyy-MM-dd'T'HH:mm:ss` (e.g. 2020-12-29T00:00:00)
 - `yyyy-MM-dd HH:mm:ss` (e.g. 2020-12-29 00:00:00)
 - `yyyy-MM-dd` (e.g. 2020-12-29, interpreted as 00:00:00)
-- `yyyy/MM/dd` (e.g. 2020-12-29, interpreted as 00:00:00. Replace `/` with `-`.)
-
-To add a custom format, specify the following VM argument at startup:
-
-**Example:**
-```sh
-mvn flyway:migrate -Ddev.aulait.csvloader.timestamp.format=yyyyMMddHHmm
-```
-If not specified, no custom parser is registered.
 
 - TABLE_1.csv
 
