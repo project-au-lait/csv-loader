@@ -3,12 +3,11 @@ package dev.aulait.csvloader.core.application;
 import static org.junit.jupiter.api.Assertions.*;
 
 import dev.aulait.csvloader.core.domain.converter.DateTimeParser;
-import dev.aulait.csvloader.core.infra.CsvLoaderTestBase;
 import java.time.LocalDateTime;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class DateTimeParserTests extends CsvLoaderTestBase {
+public class DateTimeParserTests {
 
   @ParameterizedTest
   @CsvSource({

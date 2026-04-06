@@ -1,8 +1,9 @@
 package dev.aulait.csvloader.core.domain.converter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.List;
 
 public class DateTimeParser {
@@ -11,17 +12,13 @@ public class DateTimeParser {
       List.of(
           DateTimeFormatter.ISO_LOCAL_DATE_TIME,
           DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"),
-          DateTimeFormatter.ISO_DATE);
+          new DateTimeFormatterBuilder()
+              .appendPattern("yyyy-MM-dd")
+              .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+              .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+              .toFormatter());
 
-  private static DateTimeFormatter cachedFormatter;
-
-  static {
-    init();
-  }
-
-  static void init() {
-    cachedFormatter = null;
-  }
+  private static DateTimeFormatter detectedFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
   public static LocalDateTime toTimestamp(String value) {
     if (value == null || value.isBlank()) {
@@ -30,18 +27,18 @@ public class DateTimeParser {
 
     String trimmedValue = value.trim();
 
-    if (cachedFormatter != null) {
-      try {
-        return parse(trimmedValue, cachedFormatter);
-      } catch (Exception e) {
-        /* If the formats do not match, the analysis will be performed using all formats. */
-      }
+    try {
+      return LocalDateTime.parse(trimmedValue, detectedFormatter);
+    } catch (Exception e) {
+      return detectAndParse(trimmedValue);
     }
+  }
 
+  private static LocalDateTime detectAndParse(String value) {
     for (DateTimeFormatter formatter : FORMATTERS) {
       try {
-        LocalDateTime dateTime = parse(trimmedValue, formatter);
-        cachedFormatter = formatter;
+        LocalDateTime dateTime = LocalDateTime.parse(value, formatter);
+        detectedFormatter = formatter;
         return dateTime;
       } catch (Exception e) {
         /* If the format doesn't match, try the following formatter. */
@@ -49,13 +46,5 @@ public class DateTimeParser {
     }
 
     throw new IllegalArgumentException("Invalid timestamp: " + value);
-  }
-
-  private static LocalDateTime parse(String value, DateTimeFormatter formatter) {
-    try {
-      return LocalDateTime.parse(value, formatter);
-    } catch (Exception e) {
-      return LocalDate.parse(value, formatter).atStartOfDay();
-    }
   }
 }
