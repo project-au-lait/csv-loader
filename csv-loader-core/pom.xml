@@ -37,6 +37,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>33.4.0-jre</version>
+    </dependency>
+    <dependency>
       <groupId>${db.jdbc.groupId}</groupId>
       <artifactId>${db.jdbc.artifactId}</artifactId>
       <version>${db.jdbc.version}</version>
