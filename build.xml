@@ -51,4 +51,20 @@
     </if>
   </target>
 
+  <target name="deploy">
+    <condition property="maven-central" value=",maven-central" else="">
+      <not>
+        <matches pattern="-SNAPSHOT$" string="${project.version}" />
+      </not>
+    </condition>
+
+    <exec executable="${mvn.cmd}" failonerror="true">
+      <arg line="install -DskipTests" />
+    </exec>
+
+    <exec executable="${mvn.cmd}" failonerror="true">
+      <arg line="clean deploy -P setup,release${maven-central}" />
+    </exec>
+  </target>
+
 </project>
