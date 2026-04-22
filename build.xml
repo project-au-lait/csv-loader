@@ -61,7 +61,11 @@
     </condition>
 
     <exec executable="${mvn.cmd}" failonerror="true">
-      <arg line="clean deploy -P release${maven-central}" />
+      <arg line="install -DskipTests" />
+    </exec>
+
+    <exec executable="${mvn.cmd}" failonerror="true">
+      <arg line="clean deploy -P setup,release${maven-central}" />
     </exec>
   </target>
 
