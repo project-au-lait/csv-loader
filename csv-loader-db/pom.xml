@@ -113,16 +113,6 @@
                 </goals>
                 <phase>compile</phase>
               </execution>
-              <execution>
-                <?m2e ignore?>
-                <id>migrate-on-integration-test</id>
-                <goals>
-                  <goal>clean</goal>
-                  <goal>migrate</goal>
-                  <goal>info</goal>
-                </goals>
-                <phase>integration-test</phase>
-              </execution>
             </executions>
           </plugin>
         </plugins>
