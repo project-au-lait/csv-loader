@@ -32,78 +32,11 @@
         <directory>src/main/resources</directory>
       </resource>
     </resources>
-
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.5.0</version>
-        <configuration>
-          <executable>docker</executable>
-          <commandlineArgs>compose up -d --wait</commandlineArgs>
-        </configuration>
-        <executions>
-          <execution>
-            <?m2e ignore?>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <phase>compile</phase>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.flywaydb</groupId>
-        <artifactId>flyway-maven-plugin</artifactId>
-        <version>${flyway.version}</version>
-        <configuration>
-          <configFiles>src/tool/resources/flyway.conf</configFiles>
-          <password>${db.password}</password>
-          <schemas>${db.schema}</schemas>
-          <url>${db.jdbc.url}</url>
-          <user>${db.username}</user>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-database-postgresql</artifactId>
-            <version>${flyway.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>${db.jdbc.groupId}</groupId>
-            <artifactId>${db.jdbc.artifactId}</artifactId>
-            <version>${db.jdbc.version}</version>
-          </dependency>
-        </dependencies>
-        <executions>
-          <execution>
-            <?m2e ignore?>
-            <id>migrate-on-compile</id>
-            <goals>
-              <goal>clean</goal>
-              <goal>migrate</goal>
-              <goal>info</goal>
-            </goals>
-            <phase>compile</phase>
-          </execution>
-          <execution>
-            <?m2e ignore?>
-            <id>migrate-on-integration-test</id>
-            <goals>
-              <goal>clean</goal>
-              <goal>migrate</goal>
-              <goal>info</goal>
-            </goals>
-            <phase>integration-test</phase>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
   </build>
 
   <profiles>
     <profile>
-      <id>integration-test</id>
+      <id>setup</id>
 
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -125,6 +58,65 @@
       <properties>
         <flyway.locations>classpath:db/migration</flyway.locations>
       </properties>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.5.0</version>
+            <configuration>
+              <executable>docker</executable>
+              <commandlineArgs>compose up -d --wait</commandlineArgs>
+            </configuration>
+            <executions>
+              <execution>
+                <?m2e ignore?>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>compile</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <version>${flyway.version}</version>
+            <configuration>
+              <configFiles>src/tool/resources/flyway.conf</configFiles>
+              <password>${db.password}</password>
+              <schemas>${db.schema}</schemas>
+              <url>${db.jdbc.url}</url>
+              <user>${db.username}</user>
+            </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-database-postgresql</artifactId>
+                <version>${flyway.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>${db.jdbc.groupId}</groupId>
+                <artifactId>${db.jdbc.artifactId}</artifactId>
+                <version>${db.jdbc.version}</version>
+              </dependency>
+            </dependencies>
+            <executions>
+              <execution>
+                <?m2e ignore?>
+                <id>migrate-on-compile</id>
+                <goals>
+                  <goal>clean</goal>
+                  <goal>migrate</goal>
+                  <goal>info</goal>
+                </goals>
+                <phase>compile</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
 
     </profile>
   </profiles>
