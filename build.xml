@@ -58,13 +58,22 @@
       </not>
     </condition>
 
-    <exec executable="${mvn.cmd}" failonerror="true">
-      <arg line="install -DskipTests" />
-    </exec>
+    <trycatch>
+      <try>
+        <exec executable="${mvn.cmd}" failonerror="true">
+          <arg line="install -DskipTests" />
+        </exec>
 
-    <exec executable="${mvn.cmd}" failonerror="true">
-      <arg line="clean deploy -P setup,release${maven-central}" />
-    </exec>
+        <exec executable="${mvn.cmd}" failonerror="true">
+          <arg line="clean deploy -P setup,release${maven-central}" />
+        </exec>
+      </try>
+      <finally>
+        <exec executable="docker" dir="${basedir}/csv-loader-db" failonerror="false">
+          <arg line="compose down" />
+        </exec>
+      </finally>
+    </trycatch>
   </target>
 
 </project>
