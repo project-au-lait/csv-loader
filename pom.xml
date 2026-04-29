@@ -40,7 +40,7 @@
     <db.schema>public</db.schema>
     <db.username>postgres</db.username>
 
-    <flyway.version>10.22.0</flyway.version>
+    <flyway.version>12.5.0</flyway.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>21</maven.compiler.release>
