@@ -62,4 +62,8 @@
     </testResources>
   </build>
 
+
+  <!-- More Project Information -->
+  <name>CSV Loader Core</name>
+
 </project>

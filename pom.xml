@@ -107,8 +107,8 @@
   </build>
 
   <!-- More Project Information -->
-  <name>csv-loader</name>
-  <description>A application used to load CSV files to DB with JDBC connection.</description>
+  <name>CSV Loader</name>
+  <description>An application used to load CSV files to DB with JDBC connection.</description>
   <url>https://aulait.dev</url>
   <licenses>
     <license>

@@ -26,4 +26,8 @@
       <version>${project.version}</version>
     </dependency>
   </dependencies>
+
+  <!-- More Project Information -->
+  <name>CSV Loader Flyway</name>
+
 </project>
