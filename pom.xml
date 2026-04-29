@@ -6,7 +6,7 @@
   <!-- The Basics -->
   <groupId>dev.aulait.cl</groupId>
   <artifactId>csv-loader</artifactId>
-  <version>0.9</version>
+  <version>0.10-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <dependencyManagement>
