@@ -2,7 +2,7 @@
 
 CSV LoaderはCSVファイルをDBにロードするツールです。
 
-CSV Loaderのv0.8時点での用途は[FlywayのJava-based Migration](https://flywaydb.org/documentation/concepts/migrations#java-based-migrations)に特化しています。次バージョン移行でjar単独実行、Maven Plugin等のサポートを予定しています。
+CSV Loaderのv0.9時点での用途は[FlywayのJava-based Migration](https://flywaydb.org/documentation/concepts/migrations#java-based-migrations)に特化しています。次バージョン移行でjar単独実行、Maven Plugin等のサポートを予定しています。
 
 ## 必要なソフトウェア
 
@@ -55,7 +55,7 @@ CREATE TABLE TABLE_1 (
     <dependency>
       <groupId>dev.aulait.cl</groupId>
       <artifactId>csv-loader-flyway</artifactId>
-      <version>0.8</version>
+      <version>0.9</version>
     </dependency>
   </dependences>
 ```

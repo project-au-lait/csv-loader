@@ -2,7 +2,7 @@
 
 CSV Loader is a tool for loading CSV files into a DB.
 
-The use of CSV Loader as of v0.8 is specific to [Flyway's Java-based Migration](https://flywaydb.org/documentation/concepts/migrations#java-based-migrations). We are planning to run the jar alone and support the Maven Plugin etc. with the next version migration.
+The use of CSV Loader as of v0.9 is specific to [Flyway's Java-based Migration](https://flywaydb.org/documentation/concepts/migrations#java-based-migrations). We are planning to run the jar alone and support the Maven Plugin etc. with the next version migration.
 
 ## Required software
 
@@ -55,7 +55,7 @@ Next, add the CSV Loader dependency to your pom.xml.
     <dependency>
       <groupId>dev.aulait.cl</groupId>
       <artifactId>csv-loader-flyway</artifactId>
-      <version>0.8</version>
+      <version>0.9</version>
     </dependency>
   </dependences>
 ```
