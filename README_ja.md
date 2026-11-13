@@ -6,7 +6,7 @@ CSV Loaderのv0.9時点での用途は[FlywayのJava-based Migration](https://fl
 
 ## 必要なソフトウェア
 
-- Java 17+
+- Java 21+
 - Maven / Gradle
 
 ## 使用方法 (Flyway Java-based Migration)
