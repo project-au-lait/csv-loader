@@ -6,7 +6,7 @@ The use of CSV Loader as of v0.9 is specific to [Flyway's Java-based Migration](
 
 ## Required software
 
-- Java 17+
+- Java 21+
 - Maven/Gradle
 
 ## Usage (Flyway Java-based Migration)
